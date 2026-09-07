@@ -589,12 +589,22 @@
 
   /* ---------- scroll reveal ---------- */
   .reveal {
+    opacity: 1;
+    transform: none;
+    transition: opacity 360ms ease-out, transform 360ms ease-out;
+  }
+  .reveal.is-pending:not(:focus-within) {
     opacity: 0;
-    transform: translateY(22px);
-    transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
+    transform: translateY(16px);
     will-change: opacity, transform;
   }
   .reveal.is-visible { opacity: 1; transform: none; will-change: auto; }
+  .reveal:focus-within {
+    opacity: 1;
+    transform: none;
+    transition: none !important;
+    transition-delay: 0ms !important;
+  }
 
   /* ---------- load-in fade ---------- */
   .motion-fade-up { animation: motion-fade-up 560ms cubic-bezier(0.22,1,0.36,1) both; }
@@ -1076,6 +1086,46 @@
     border-width: 2px !important;
     border-style: dashed !important;
   }
+}
+
+/* Focused homepage refresh: functional project starter, unchanged brand palette. */
+.home-hero {
+  position: relative;
+  background: linear-gradient(135deg, rgba(208,242,238,0.30), transparent 56%);
+}
+.home-hero-title { text-wrap: balance; }
+.home-hero-emphasis {
+  color: #152B54;
+  text-decoration: underline;
+  text-decoration-color: #00B59E;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.16em;
+}
+.project-starter-heading { background: #152B54; }
+.project-starter-heading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(208,242,238,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(208,242,238,0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(90deg, transparent, #000);
+}
+.starter-category { background: hsl(var(--card)); transition: border-color 160ms ease, background-color 160ms ease; }
+.starter-category-icon { background: #D0F2EE; color: #152B54; }
+.starter-category:hover { border-color: #00B59E; background: rgba(208,242,238,0.28); }
+.starter-category:focus-visible { outline: 2px solid #152B54; outline-offset: 2px; }
+.path-card-eyebrow { color: #152B54; }
+.dark .home-hero { background: linear-gradient(135deg, rgba(0,181,158,0.07), transparent 56%); }
+.dark .home-hero-emphasis { color: #F8FAFC; }
+.dark .project-starter-heading { background: #142A44; }
+.dark .starter-category-icon { background: rgba(0,181,158,0.14); color: #D0F2EE; }
+.dark .starter-category:hover { background: #142A44; }
+.dark .starter-category:focus-visible { outline-color: #D0F2EE; }
+.dark .path-card-eyebrow { color: var(--path-accent); }
+
+@media (max-width: 639px), (prefers-reduced-motion: reduce) {
+  .reveal.is-pending:not(:focus-within) { opacity: 1; transform: none; transition: none; will-change: auto; }
 }
 
 /* Conversion-critical mobile paths should never begin behind an opacity animation. */

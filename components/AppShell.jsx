@@ -2,7 +2,7 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
 import {
   ArrowUpRight,
@@ -67,6 +67,7 @@ function BrandText({ size = 17, onDark = false }) {
 export default function AppShell({ children, hideNav = false, hideFooter = false, flushFooter = false, wide = false, bleed = false }) {
   const { t, lang, setLang } = useLang();
   const pathname = usePathname();
+  const [navigationSearch, setNavigationSearch] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState('light');
@@ -135,6 +136,12 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
 
   return (
     <div className="app-viewport flex flex-col">
+      <a
+        href="#main-content"
+        className="fixed start-4 top-3 z-[120] -translate-y-24 rounded-xl bg-[#152B54] px-4 py-3 text-sm font-bold text-white shadow-lift focus-visible:translate-y-0"
+      >
+        {copy.skipToContent}
+      </a>
       <header
         className={`site-header sticky top-0 z-40 transition-all duration-300 ${
           scrolled
@@ -150,11 +157,11 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
 
           {/* centered desktop nav */}
           <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-            <HeaderLink href="/" label={t('home')} />
-            <HeaderLink href="/start-here" label={t('startEyebrow')} />
-            <HeaderLink href="/post-project" label={copy.projectNav} ariaLabel={t('postProject')} />
-            <HeaderLink href="/contractor" label={t('providerTypeContractor')} />
-            <HeaderLink href="/contractor?type=consultant" label={copy.consultantNav} ariaLabel={t('providerTypeConsultant')} />
+            <HeaderLink href="/" label={t('home')} navigationSearch={navigationSearch} />
+            <HeaderLink href="/start-here" label={t('startEyebrow')} navigationSearch={navigationSearch} />
+            <HeaderLink href="/post-project" label={copy.projectNav} ariaLabel={t('postProject')} navigationSearch={navigationSearch} />
+            <HeaderLink href="/contractor" label={t('providerTypeContractor')} navigationSearch={navigationSearch} />
+            <HeaderLink href="/contractor?type=consultant" label={copy.consultantNav} ariaLabel={t('providerTypeConsultant')} navigationSearch={navigationSearch} />
           </nav>
 
           <div className="flex items-center gap-2 shrink-0">
@@ -194,10 +201,12 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         rtl={lang === 'ar'}
         onThemeToggle={toggleTheme}
         closeButtonRef={menuCloseButtonRef}
+        navigationSearch={navigationSearch}
       />
 
-      <main className={`mobile-nav-main flex-1 w-full ${hideFooter ? (hideNav ? 'pb-10' : 'pb-32 lg:pb-12') : 'pb-0'}`}>
+      <main id="main-content" tabIndex={-1} className={`mobile-nav-main scroll-mt-20 flex-1 w-full ${hideFooter ? (hideNav ? 'pb-10' : 'pb-32 lg:pb-12') : 'pb-0'}`}>
         <Suspense fallback={null}>
+          <NavigationSearchSync onChange={setNavigationSearch} />
           <MarketingAttribution />
         </Suspense>
         {bleed ? (
@@ -219,6 +228,25 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       )}
     </div>
   );
+}
+
+// Keep query subscriptions inside a small boundary, not around the visible shell.
+function NavigationSearchSync({ onChange }) {
+  const searchParams = useSearchParams();
+  const search = searchParams.toString();
+  useEffect(() => { onChange(search); }, [search, onChange]);
+  return null;
+}
+
+function isNavigationActive(href, pathname, search) {
+  const [targetPath, targetQuery = ''] = href.split('?');
+  if (pathname !== targetPath) return false;
+  if (targetPath !== '/contractor') return true;
+  if (search === null) return false;
+
+  const targetIsConsultant = new URLSearchParams(targetQuery).get('type') === 'consultant';
+  const currentIsConsultant = new URLSearchParams(search).get('type') === 'consultant';
+  return targetIsConsultant === currentIsConsultant;
 }
 
 function getShellCopy(lang) {
@@ -253,6 +281,7 @@ function getShellCopy(lang) {
       allPaths: 'كل المسارات',
       appearance: 'المظهر',
       switchLanguage: 'تبديل اللغة',
+      skipToContent: 'تجاوز إلى المحتوى الرئيسي',
     };
   }
   return {
@@ -285,6 +314,7 @@ function getShellCopy(lang) {
     allPaths: 'All paths',
     appearance: 'Appearance',
     switchLanguage: 'Switch language',
+    skipToContent: 'Skip to main content',
   };
 }
 
@@ -304,13 +334,9 @@ function ThemeToggle({ theme, onToggle, copy }) {
   );
 }
 
-function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle, closeButtonRef }) {
+function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle, closeButtonRef, navigationSearch }) {
   const pathname = usePathname();
-  const [currentSearch, setCurrentSearch] = useState('');
   const drawerRef = useRef(null);
-  useEffect(() => {
-    if (typeof window !== 'undefined') setCurrentSearch(window.location.search);
-  }, [pathname]);
   const actionItems = [
     { href: '/post-project', label: t('startProjectTitle'), helper: t('startProjectCta'), icon: Building2, accent: 'teal' },
     { href: '/contractor', label: t('startContractorTitle'), helper: t('startContractorCta'), icon: Hammer, accent: 'amber' },
@@ -322,7 +348,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
     { href: '/for-projects', label: t('startProjectEyebrow'), icon: Users },
     { href: '/for-contractors', label: t('startContractorEyebrow'), icon: CheckCircle2 },
   ];
-  const isActive = (href) => href.includes('?') ? `${pathname}${currentSearch}` === href : pathname === href;
+  const isActive = (href) => isNavigationActive(href, pathname, navigationSearch);
   const keepFocusInDrawer = (event) => {
     if (!open || event.key !== 'Tab') return;
     const focusable = Array.from(drawerRef.current?.querySelectorAll(
@@ -502,9 +528,9 @@ function SecondaryDrawerLink({ item, active }) {
   );
 }
 
-function HeaderLink({ href, label, ariaLabel = label }) {
+function HeaderLink({ href, label, ariaLabel = label, navigationSearch }) {
   const pathname = usePathname();
-  const active = pathname === href.split('?')[0] && !href.includes('?');
+  const active = isNavigationActive(href, pathname, navigationSearch);
   return (
     <Link
       href={href}

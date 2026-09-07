@@ -32,26 +32,26 @@ export default function HomePage() {
   return (
     <AppShell wide bleed flushFooter>
       {/* ============ HERO ============ */}
-      <section className="v2-ambient">
-        <div className="container-x relative z-10 pb-10 pt-6 sm:pb-14 sm:pt-10 lg:pb-24 lg:pt-20">
-          <div className="grid min-w-0 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
+      <section className="home-hero">
+        <div className="container-x relative z-10 pb-8 pt-6 sm:py-12 lg:py-16">
+          <div className="grid min-w-0 items-center gap-7 sm:gap-10 lg:grid-cols-[1.08fr_1fr] lg:gap-14">
             <div className="min-w-0">
-              <div className="motion-fade-up mb-4 inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3 py-1.5 text-[12px] font-bold leading-snug text-navy sm:mb-6 sm:px-3.5 sm:text-[12.5px]">
+              <div className="mb-4 inline-flex max-w-full min-w-0 items-center gap-2 text-[12px] font-bold leading-snug text-navy sm:mb-6 sm:text-[12.5px]">
                 <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                 <span className="min-w-0 break-words">{t('heroBadge')}</span>
               </div>
 
-              <h1 className="motion-fade-up motion-delay-1 display-title break-words text-[31px] min-[390px]:text-[34px] sm:text-[48px] lg:text-[58px]">
+              <h1 className="home-hero-title display-title break-words text-[30px] min-[390px]:text-[34px] sm:text-[44px] lg:text-[54px]">
                 {words.join(' ')}{' '}
-                {lastWord && <span className="text-teal">{lastWord}</span>}
+                {lastWord && <span className="home-hero-emphasis">{lastWord}</span>}
               </h1>
 
-              <p className="motion-fade-up motion-delay-2 mt-3.5 max-w-xl break-words text-[14px] leading-6 text-muted-foreground sm:mt-5 sm:text-[17px] sm:leading-relaxed">
+              <p className="mt-3.5 max-w-xl break-words text-[14px] leading-6 text-muted-foreground sm:mt-5 sm:text-[16px] sm:leading-relaxed">
                 {t('subtitle')}
               </p>
 
-              <div className="motion-fade-up motion-delay-3 mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
-                <Link href="/post-project" className="btn btn-primary soft-shine glow-teal min-h-[52px] px-8 text-[15px] sm:min-h-14">
+              <div className="mt-5 flex flex-col gap-2 sm:mt-7 sm:flex-row sm:gap-3">
+                <Link href="/post-project" className="btn btn-primary min-h-[52px] px-7 text-[15px] sm:min-h-14">
                   {t('postProject')} <Arrow />
                 </Link>
                 <Link href="/contractor" className="btn btn-outline min-h-[52px] px-7 text-[14.5px] sm:min-h-14">
@@ -60,7 +60,7 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              <div className="motion-fade-up motion-delay-4 mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 sm:mt-8 sm:gap-x-6 sm:gap-y-2.5">
+              <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-4 sm:mt-7 sm:gap-x-5">
                 {[t('benefit_ai'), t('benefit_bids'), t('benefit_local')].map((b, i) => (
                   <span key={i} className="inline-flex min-w-0 items-center gap-1.5 text-[12.5px] font-semibold leading-snug text-muted-foreground sm:text-[13px]">
                     <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#00B59E' }} />
@@ -70,10 +70,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* matched-providers visual — desktop only */}
-            <div className="hidden lg:block motion-fade-up motion-delay-2 lg:justify-self-end w-full max-w-lg mx-auto lg:mx-0">
-              <MatchPreview t={t} />
-            </div>
+            <ProjectStarter t={t} isRTL={isRTL} />
           </div>
         </div>
       </section>
@@ -307,47 +304,31 @@ function FaqSection({ t }) {
   );
 }
 
-function MatchPreview({ t }) {
+function ProjectStarter({ t, isRTL }) {
   return (
-    <div className="float-soft rounded-[24px] border border-border bg-card p-6 shadow-lift">
-      <div className="flex items-center justify-between gap-3 mb-5">
-        <div className="min-w-0">
-          <div className="text-[12px] font-bold text-muted-foreground/75 ltr:uppercase ltr:tracking-wide">{t('projectStatus')}</div>
-          <div className="truncate text-[15px] font-bold text-navy mt-0.5">{t('status_contractors_invited')}</div>
-        </div>
-        <span className="pulse-dot flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: 'rgba(0,181,158,0.12)' }}>
-          <Cpu className="h-[18px] w-[18px]" style={{ color: '#00B59E' }} />
-        </span>
-      </div>
-
-      <div className="space-y-2.5">
-        <ProviderRow icon={Hammer} title={t('providerTypeContractor')} sub={t('cstatus_verified')} tone="teal" />
-        <ProviderRow icon={ClipboardCheck} title={t('providerTypeConsultant')} sub={t('cstatus_verified')} tone="amber" />
-      </div>
-
-      <div className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-[#00B59E]/20 bg-[#00B59E]/8 py-3.5 text-[13px] font-bold text-navy">
-        <GitCompare className="h-4 w-4 shrink-0" />
-        {t('bidComparison')}
-      </div>
-    </div>
-  );
-}
-
-function ProviderRow({ icon: Icon, title, sub, tone }) {
-  const bg = tone === 'amber' ? 'rgba(255,182,56,0.14)' : 'rgba(0,181,158,0.12)';
-  const fg = tone === 'amber' ? '#152B54' : '#00B59E';
-  return (
-    <div className="flex items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3.5">
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style={{ background: bg }}>
-        <Icon className="h-[19px] w-[19px]" style={{ color: fg }} />
-      </span>
-      <div className="min-w-0 flex-1">
-        <div className="text-[13.5px] font-bold text-navy leading-tight truncate">{title}</div>
-        <div className="mt-0.5 inline-flex items-center gap-1 text-[12px] font-semibold text-muted-foreground">
-          <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: '#00B59E' }} />
-          {sub}
+    <section className="project-starter w-full min-w-0 overflow-hidden rounded-[24px] border border-border bg-card shadow-card sm:mx-auto sm:max-w-xl lg:rounded-[28px]" aria-labelledby="project-starter-title">
+      <div className="project-starter-heading relative overflow-hidden px-4 py-4 sm:px-6 sm:py-5">
+        <div className="relative z-10 flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="mb-1.5 text-[11px] font-bold text-[#D0F2EE]">{t('postProject')}</div>
+            <h2 id="project-starter-title" className="text-[18px] font-extrabold leading-snug text-white sm:text-[22px]">{t('projectStep1Title')}</h2>
+          </div>
+          <span className="shrink-0 rounded-xl border border-white/20 px-2.5 py-2 text-[11px] font-bold text-white" dir="ltr" aria-hidden="true">01 / 03</span>
         </div>
       </div>
-    </div>
+      <div className="grid grid-cols-2 gap-2 p-3 sm:gap-2.5 sm:p-4">
+        {PROJECT_CATEGORIES.map((category) => {
+          const Icon = CAT_ICONS[category] || MoreHorizontal;
+          return (
+            <Link key={category} href={`/post-project?category=${category}`} className="starter-category group flex min-h-[80px] min-w-0 items-center gap-2 rounded-2xl border border-border px-2.5 py-3 text-navy tap-highlight sm:min-h-[90px] sm:gap-3 sm:px-3">
+              <span className="starter-category-icon flex h-9 w-9 shrink-0 items-center justify-center rounded-xl sm:h-10 sm:w-10" aria-hidden="true"><Icon className="h-[18px] w-[18px] sm:h-5 sm:w-5" /></span>
+              <span className="min-w-0 flex-1 break-words text-[12px] font-bold leading-5 sm:text-[13px]">{t(`cat_${category}`)}</span>
+              <ArrowRight className={`hidden h-3.5 w-3.5 shrink-0 opacity-50 sm:block ${isRTL ? 'rotate-180' : ''}`} aria-hidden="true" />
+            </Link>
+          );
+        })}
+      </div>
+      <p className="border-t border-border px-4 py-3 text-[12px] leading-5 text-muted-foreground sm:px-6">{t('projectStep1Desc')}</p>
+    </section>
   );
 }

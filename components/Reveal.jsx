@@ -10,6 +10,7 @@ function getSharedObserver() {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
+          entry.target.classList.remove('is-pending');
           entry.target.classList.add('is-visible');
           sharedObserver?.unobserve(entry.target);
           observedElements.delete(entry.target);
@@ -20,7 +21,7 @@ function getSharedObserver() {
           sharedObserver = null;
         }
       },
-      { threshold: 0.12, rootMargin: '0px 0px -36px 0px' }
+      { threshold: 0, rootMargin: '0px 0px 64px 0px' }
     );
   }
 
@@ -43,8 +44,8 @@ function observeReveal(element) {
 }
 
 /**
- * Scroll-triggered fade-up reveal. Pure CSS transition driven by
- * IntersectionObserver — no dependencies, respects reduced-motion via CSS.
+ * Server HTML is visible. Only offscreen desktop sections opt into a reveal
+ * after hydration; mobile, keyboard and reduced-motion remain immediate.
  */
 export default function Reveal({ children, delay = 0, className = '', as: Tag = 'div' }) {
   const ref = useRef(null);
@@ -53,10 +54,11 @@ export default function Reveal({ children, delay = 0, className = '', as: Tag = 
     const el = ref.current;
     if (!el) return;
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion || typeof IntersectionObserver === 'undefined') {
+    if (reducedMotion || window.innerWidth < 640 || el.getBoundingClientRect().top < window.innerHeight + 64 || typeof IntersectionObserver === 'undefined') {
       el.classList.add('is-visible');
       return;
     }
+    el.classList.add('is-pending');
     return observeReveal(el);
   }, []);
 
@@ -64,6 +66,7 @@ export default function Reveal({ children, delay = 0, className = '', as: Tag = 
     <Tag
       ref={ref}
       className={`reveal ${className}`}
+      onFocusCapture={() => ref.current?.classList.remove('is-pending')}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

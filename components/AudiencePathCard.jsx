@@ -48,7 +48,7 @@ export default function AudiencePathCard({
             </span>
             <div className="min-w-0 flex-1 md:mt-5">
               {eyebrow && (
-                <div className="text-[12px] font-bold leading-5 ltr:uppercase ltr:tracking-wide" style={{ color: 'var(--path-accent)' }}>
+                <div className="path-card-eyebrow text-[12px] font-bold leading-5 ltr:uppercase ltr:tracking-wide">
                   {eyebrow}
                 </div>
               )}
