@@ -46,20 +46,20 @@ export default function MarketingLanding({
           <div className="mx-auto max-w-2xl">
             {eyebrow && (
               <div
-                className="landing-hero-eyebrow motion-fade-up mb-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-bold text-navy sm:mb-5"
+                className="landing-hero-eyebrow mb-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-bold text-navy sm:mb-5"
                 style={{ borderColor: `${accentColor}40`, background: accentSoft }}
               >
                 {eyebrow}
               </div>
             )}
-            <h1 className="landing-hero-title motion-fade-up motion-delay-1 display-title mx-auto max-w-[23rem] text-[30px] sm:max-w-2xl sm:text-[42px] lg:text-[46px]">
+            <h1 className="landing-hero-title display-title mx-auto max-w-[23rem] text-[30px] sm:max-w-2xl sm:text-[42px] lg:text-[46px]">
               {words.join(' ')}{' '}
-              <span style={{ color: accentColor }}>{accentWords.join(' ')}</span>
+              <span className="home-hero-emphasis" style={{ textDecorationColor: accentColor }}>{accentWords.join(' ')}</span>
             </h1>
-            <p className="landing-hero-subtitle motion-fade-up motion-delay-2 mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
+            <p className="landing-hero-subtitle mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
               {subtitle}
             </p>
-            <div className="landing-hero-action motion-fade-up motion-delay-3 mt-6 sm:mt-7">
+            <div className="landing-hero-action mt-6 sm:mt-7">
               <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>

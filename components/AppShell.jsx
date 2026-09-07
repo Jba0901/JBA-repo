@@ -572,18 +572,18 @@ function NavBtn({ href, icon: Icon, label, ariaLabel = label, matches = [] }) {
 }
 
 function SiteFooter({ flush = false, reserveMobileNav = false }) {
-  const { t } = useLang();
+  const { t, dir } = useLang();
   const year = new Date().getFullYear();
   return (
     <footer className={`${flush ? 'mt-0 border-t border-white/10' : 'mt-16'} premium-panel text-white`}>
-      <div className={`container-x pt-12 lg:py-14 ${reserveMobileNav ? 'pb-32' : 'pb-12'}`}>
-        <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
-          <div className="max-w-sm">
+      <div className={`container-x pt-8 lg:py-12 ${reserveMobileNav ? 'pb-28' : 'pb-8'}`}>
+        <div className="grid grid-cols-2 gap-x-5 gap-y-6 lg:grid-cols-[1.6fr_1fr_1fr]">
+          <div className="col-span-2 max-w-sm lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-3">
               <Logo className="h-8 w-8" />
               <BrandText size={16} onDark />
             </div>
-            <p className="text-[13px] leading-relaxed text-white/70">{t('subtitle')}</p>
+            <p className="text-[13px] leading-relaxed text-white/70">{dir === 'rtl' ? 'للمشاريع والمقاولين والاستشاريين في قطر.' : 'For projects, contractors and consultants in Qatar.'}</p>
             <p className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-white/70">
               <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#00B59E' }} />
               {t('contactLocationValue')}
@@ -602,7 +602,7 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
 
           <div>
             <h4 className="mb-4 text-[12px] font-bold uppercase tracking-wide text-white/60">{t('contactTitle')}</h4>
-            <div className="flex items-center gap-2.5">
+            <div className="flex flex-wrap items-center gap-2">
               <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
               <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
               <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
@@ -611,7 +611,7 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
           </div>
         </div>
 
-        <div className="mt-11 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-white/10 pt-6 text-center text-[12px] font-medium text-white/60">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-white/10 pt-4 text-center text-[12px] font-medium text-white/60">
           <span>&copy; {year} {t('appName')} &middot; {t('allRights')}</span>
           <Link
             href="/privacy"

@@ -86,7 +86,7 @@ export default function AudiencePathCard({
             <h2 className="text-[16px] font-extrabold leading-tight text-navy sm:text-[17px]">{title}</h2>
             <p className="mt-1 text-[12.5px] leading-5 text-muted-foreground sm:mt-1.5 sm:leading-relaxed">{desc}</p>
             {cta && (
-              <span className="path-card-action mt-2 inline-flex min-h-11 max-w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-start text-[12px] font-bold leading-snug sm:mt-4 sm:w-full sm:text-center sm:text-[13px]">
+              <span className="mt-2 inline-flex max-w-full items-center gap-2 text-start text-[12px] font-bold leading-snug text-navy underline decoration-[#00B59E] underline-offset-4 sm:mt-4 sm:text-[13px]">
                 <span className="min-w-0 break-words">{cta}</span>
                 <Arrow />
               </span>
