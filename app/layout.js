@@ -1,20 +1,25 @@
 import './globals.css';
-import { Cairo, Inter } from 'next/font/google';
+import './typography.css';
+import { IBM_Plex_Sans_Arabic, Manrope } from 'next/font/google';
+import { headers } from 'next/headers';
+import { LANG_HEADER, resolveLanguage } from '@/lib/language.mjs';
 import { LangProvider } from '@/lib/LangContext';
 import { Toaster } from '@/components/ui/sonner';
 
-const cairo = Cairo({
+const arabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic'],
-  weight: 'variable',
+  weight: ['400', '500', '600'],
   display: 'swap',
-  variable: '--font-cairo',
+  variable: '--font-arabic',
 });
 
-const inter = Inter({
+const latin = Manrope({
   subsets: ['latin'],
   weight: 'variable',
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-latin',
+  // Let Arabic fall through to Plex, not an inserted Arial fallback.
+  adjustFontFallback: false,
 });
 
 export const metadata = {
@@ -28,8 +33,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const initialLang = resolveLanguage(headers().get(LANG_HEADER));
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang={initialLang} dir={initialLang === 'ar' ? 'rtl' : 'ltr'} className={`${arabic.variable} ${latin.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <script
@@ -39,7 +45,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <LangProvider>
+        <LangProvider initialLang={initialLang}>
           {children}
           <Toaster />
         </LangProvider>

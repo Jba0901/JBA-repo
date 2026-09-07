@@ -1,0 +1,121 @@
+/*
+ * MimaarLink bilingual typography.
+ * Arabic: IBM Plex Sans Arabic. Latin: Manrope.
+ * Font files are served by Next from this deployment, never a runtime Google request.
+ * Keep Arabic connected-script spacing natural; do not apply Latin tracking to it.
+ */
+:root {
+  --type-weight-body: 400;
+  --type-weight-label: 500;
+  --type-weight-heading: 600;
+  --type-weight-emphasis: 600;
+  --type-body: 1rem;
+  --type-copy: 0.9375rem;
+  --type-label: 0.875rem;
+  --type-caption: 0.8125rem;
+}
+
+body {
+  font-size: var(--type-body);
+  font-weight: var(--type-weight-body);
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: 1.65;
+}
+
+/* Mixed-script labels and real form values need a complete, predictable fallback. */
+:where(input[type='email'], input[type='tel'], input[inputmode='tel'], input[inputmode='numeric'], bdi[dir='ltr']) {
+  font-family: var(--font-latin), var(--font-arabic), Arial, sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: normal;
+}
+
+:where(h1, h2, h3, h4, button, a) { overflow-wrap: break-word; }
+:where(p) { text-wrap: pretty; }
+.display-title { font-weight: var(--type-weight-heading); }
+.eyebrow { font-weight: var(--type-weight-label); }
+.btn, strong, b { font-weight: var(--type-weight-emphasis); }
+html[dir='rtl'] .display-title { line-height: 1.4; letter-spacing: 0; }
+html[dir='ltr'] .display-title { line-height: 1.17; letter-spacing: -0.035em; }
+html[dir='rtl'] :where(h1, h2, h3, h4, button, input, textarea, label) { letter-spacing: 0; }
+
+/* A headline should feel intentional, not emboldened body text. */
+.studio-hero h1 {
+  font-weight: var(--type-weight-heading);
+  font-size: clamp(2.125rem, 9vw, 2.625rem);
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+}
+html[dir='rtl'] .studio-hero h1 {
+  font-size: clamp(2.125rem, 9vw, 2.5rem);
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.studio-hero h1 span { margin-top: 0.08em; }
+.studio-intro { font-size: var(--type-copy); line-height: 1.8; }
+.studio-location { font-size: var(--type-caption); font-weight: var(--type-weight-label); }
+.studio-browse { font-size: var(--type-caption); font-weight: var(--type-weight-label); }
+.studio-home .btn { font-size: var(--type-copy); font-weight: var(--type-weight-heading); }
+html[dir='rtl'] .studio-home .btn { font-size: 1rem; }
+.mobile-bottom-nav a > span { font-size: 0.75rem; font-weight: var(--type-weight-label); line-height: 1.5; }
+
+.studio-picker h2 { font-size: 1.125rem; font-weight: var(--type-weight-heading); line-height: 1.5; }
+.studio-picker p { font-size: var(--type-caption); line-height: 1.65; }
+.studio-category { min-height: 96px; }
+.studio-category span { width: 100%; min-width: 0; font-size: var(--type-label); font-weight: var(--type-weight-label); line-height: 1.5; overflow-wrap: break-word; }
+.studio-section-heading h2,
+.studio-partners h2,
+.studio-final h2 { font-size: 1.75rem; font-weight: var(--type-weight-heading); line-height: 1.35; letter-spacing: -0.025em; }
+html[dir='rtl'] :is(.studio-section-heading h2, .studio-partners h2, .studio-final h2) { letter-spacing: 0; line-height: 1.45; }
+.studio-section-heading > p,
+.studio-partners-copy > p:last-child,
+.studio-final p { font-size: var(--type-copy); line-height: 1.75; }
+.studio-steps h3 { font-size: 1rem; font-weight: var(--type-weight-heading); line-height: 1.5; }
+.studio-steps p { font-size: var(--type-label); line-height: 1.75; }
+.studio-kicker { font-size: var(--type-caption); font-weight: var(--type-weight-label); }
+.studio-partner-label strong { font-size: 1rem; font-weight: var(--type-weight-heading); line-height: 1.5; }
+.studio-partner-label > span { font-size: var(--type-caption); line-height: 1.7; }
+.studio-partner-label .studio-partner-action { font-weight: var(--type-weight-heading); }
+.studio-accordion h3 > button { font-size: var(--type-copy); font-weight: var(--type-weight-label); line-height: 1.6; }
+.studio-accordion [role='region'] > div { font-size: var(--type-label); line-height: 1.8; padding-inline: 0; }
+
+/* Public form and landing type: keep supporting copy readable on real phones. */
+.form-progress-compact h2 { font-weight: var(--type-weight-heading); line-height: 1.5; }
+.form-progress-description { font-size: var(--type-label); line-height: 1.75; }
+.project-form-subtitle,
+.provider-form-subtitle { font-size: var(--type-label); line-height: 1.75; }
+.project-form-flow label,
+.provider-form-flow label { font-weight: var(--type-weight-label); line-height: 1.65; }
+.start-here-intro > p { font-size: var(--type-copy); line-height: 1.7; }
+.start-here-grid .path-card h2 { font-size: 1.125rem; font-weight: var(--type-weight-heading); line-height: 1.5; }
+.start-here-grid .path-card p { font-size: var(--type-label); line-height: 1.7; }
+.path-card-link-label { font-size: var(--type-label); font-weight: var(--type-weight-heading); line-height: 1.7; }
+.landing-hero-subtitle { font-size: 1rem; line-height: 1.8; }
+.landing-benefit-copy h3 { font-weight: var(--type-weight-heading); }
+.landing-benefit-copy p { font-size: var(--type-label); line-height: 1.75; }
+#marketing-consent-title { font-size: var(--type-label); font-weight: var(--type-weight-heading); }
+#marketing-consent-description { font-size: var(--type-caption); line-height: 1.6; }
+.marketing-consent-panel .btn { font-size: var(--type-label); }
+.marketing-consent-panel a { color: hsl(var(--foreground)); text-decoration-color: #00B59E; }
+
+@media (min-width: 640px) {
+  .studio-hero h1 { font-size: 3rem; }
+  html[dir='rtl'] .studio-hero h1 { font-size: 2.875rem; }
+  .studio-intro { font-size: 1rem; }
+  .studio-section-heading h2, .studio-partners h2, .studio-final h2 { font-size: 2rem; }
+  .studio-picker h2 { font-size: 1.25rem; }
+  .studio-category { min-height: 104px; }
+  .studio-category span { font-size: 0.9375rem; }
+}
+
+@media (min-width: 1024px) {
+  .studio-hero h1 { font-size: clamp(2.875rem, 4.1vw, 3.75rem); }
+  html[dir='rtl'] .studio-hero h1 { font-size: clamp(2.75rem, 4vw, 3.625rem); }
+}
+
+@media (max-width: 359px) {
+  .studio-picker-top { gap: 8px; }
+  .studio-picker-symbol { display: none; }
+  .studio-category { padding: 10px; }
+  .studio-category span { font-size: 0.8125rem; }
+}

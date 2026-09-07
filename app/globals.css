@@ -81,8 +81,8 @@
     text-rendering: geometricPrecision;
   }
   .dark body { color-scheme: dark; }
-  html[dir="rtl"] body { font-family: var(--font-cairo), 'Noto Kufi Arabic', system-ui, sans-serif; }
-  html[dir="ltr"] body { font-family: var(--font-inter), system-ui, sans-serif; }
+  html[dir="rtl"] body { font-family: var(--font-latin), var(--font-arabic), Arial, sans-serif; }
+  html[dir="ltr"] body { font-family: var(--font-latin), var(--font-arabic), Arial, sans-serif; }
   /* letter-spacing breaks connected Arabic script — neutralize it in RTL */
   html[dir="rtl"] .tracking-wide,
   html[dir="rtl"] .tracking-tight,
@@ -384,8 +384,8 @@
   .dark .eyebrow { color: #D0F2EE; }
   .display-title {
     color: #152B54;
-    font-weight: 800;
-    letter-spacing: -0.025em;
+    font-weight: 600;
+    letter-spacing: -0.035em;
     line-height: 1.1;
   }
   html[dir="rtl"] .display-title { letter-spacing: 0; line-height: 1.4; }

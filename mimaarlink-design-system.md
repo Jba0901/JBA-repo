@@ -80,7 +80,17 @@ Rules:
 
 ## 4. Typography
 
-Use clean Arabic/English sans-serif typography. The current site uses Google font loading and should stay simple.
+Use the shared type system in `app/typography.css` and the build-time self-hosted font configuration in `app/layout.js`.
+
+Current review direction (September 7, 2026):
+
+- Arabic: **IBM Plex Sans Arabic**, real weights 400 / 500 / 600.
+- English and Latin numerals: **Manrope**, variable font with the same 400 / 500 / 600 UI weight scale.
+- The font stack puts Manrope before Plex so Latin characters in Arabic screens use Manrope; Arabic glyphs fall through to Plex. Do not insert an Arial fallback ahead of Plex.
+- Use 400 for paragraphs, 500 for labels, and 600 for headlines/actions. Avoid synthetic bold or italic and unnecessarily heavy 800/900 weights.
+- Fonts are downloaded at build time and served from the site's own deployment. No runtime Google Fonts stylesheet or request.
+- Keep the font licenses in `public/fonts/licenses/` with the deployed assets.
+- See `docs/typography-review.md` for the comparison, rationale, and validation record.
 
 Rules:
 
@@ -92,12 +102,15 @@ Rules:
 
 Suggested scale:
 
-- Hero headline mobile: 30-36 px.
-- Hero headline desktop: 48-64 px.
-- Section headline: 26-36 px.
-- Card title: 16-22 px.
-- Body: 14-16 px.
-- Helper text: 12-14 px.
+- Hero headline mobile: 34-42 px, with separate Arabic/English line-height and wrapping.
+- Hero headline desktop: approximately 46-60 px.
+- Section headline: 28-32 px.
+- Card title: 16-20 px.
+- Body: 15-16 px; secondary supporting copy 14 px.
+- Captions: 13 px. Compact mobile navigation may use 12 px.
+- Phone inputs remain at least 16 px on narrow/coarse-pointer screens.
+- Arabic headlines: natural letter spacing, line-height around 1.4. English headlines: restrained negative tracking, line-height around 1.17-1.25.
+- Long category labels must have a bounded width and wrap under increased user text spacing; do not hide overflow to conceal clipped labels.
 
 ## 5. Layout Rules
 

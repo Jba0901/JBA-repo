@@ -17,6 +17,14 @@ module.exports = {
     		}
     	},
     	extend: {
+            fontWeight: {
+                normal: '400',
+                medium: '500',
+                semibold: '600',
+                bold: '600',
+                extrabold: '600',
+                black: '600',
+            },
     		colors: {
     			border: 'hsl(var(--border))',
     			input: 'hsl(var(--input))',
