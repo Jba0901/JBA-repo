@@ -56,6 +56,7 @@ html[dir='rtl'] .studio-hero h1 {
 .studio-location { font-size: var(--type-caption); font-weight: var(--type-weight-label); }
 .studio-browse { font-size: var(--type-caption); font-weight: var(--type-weight-label); }
 .studio-home .btn { font-size: var(--type-copy); font-weight: var(--type-weight-heading); }
+.studio-final .btn { padding-inline: 1.5rem; }
 html[dir='rtl'] .studio-home .btn { font-size: 1rem; }
 .mobile-bottom-nav a > span { font-size: 0.75rem; font-weight: var(--type-weight-label); line-height: 1.5; }
 

@@ -32,9 +32,10 @@ The Manrope fallback adjustment is disabled intentionally: its generated Arial f
 
 ## Validation and evidence
 
-- Final production build passed. Homepage remains 6.53 kB route / 143 kB first-load JS; no runtime JavaScript dependency was added for typography. Admin-auth, typography, and language tests: 15/15 passed.
+- Final production build passed. Homepage remains 6.53 kB route / 143 kB first-load JS; no runtime JavaScript dependency was added for typography. Admin-auth, typography, and language tests: 16/16 passed.
 - 224 settled layout measurements: 8 public route variants, Arabic/English, light/dark, widths 320/360/390/430/768/1024/1440. Measurements waited for document language and fonts to settle. No horizontal overflow, clipped measured headings/labels/buttons, or sub-16px visible narrow-screen text inputs.
 - Visual screenshots reviewed for Arabic/English desktop home, Arabic/English mobile home, 320px dark Arabic home, Arabic entry choices, Arabic mixed-script project details, English consultant profile step, and Arabic confirmation.
+- Deployed full-page desktop review exposed cramped side spacing on the final project action. Added 1.5rem logical side padding for both scripts, with a regression guard.
 - Increased text spacing exposed long English category labels overflowing their flex-column width. Width bounding and word wrapping were added, with a regression test. Final rebuilt 320px English retest passed with line height 1.5, letter spacing 0.12em, word spacing 0.16em, and paragraph spacing 2em. The full 224-case matrix was repeated successfully after the language repair.
 - Local mocked project submission: required-field errors, long Arabic text and diacritics, Arabic/Latin budget notation, contact data, a mocked 503 failure, successful retry, and confirmation. Retried payload matched. All API writes were intercepted by the local fixture; no real application or upload was sent.
 - Local mocked consultant submission: long company name, long service category, optional profile-only step, and success confirmation. No attachment required and no production data touched.

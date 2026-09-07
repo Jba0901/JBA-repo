@@ -61,6 +61,10 @@ test('category names may reflow when a reader increases text spacing', () => {
   assert.ok(declarations('.studio-category span').some(([property, value]) => property === 'min-width' && value === '0'));
 });
 
+test('the final project action retains breathing room around either script', () => {
+  assert.ok(declarations('.studio-final .btn').some(([property, value]) => property === 'padding-inline' && value === '1.5rem'));
+});
+
 test('both font licenses remain available in the public distribution', async () => {
   for (const file of ['IBM-Plex-Sans-Arabic-OFL.txt', 'Manrope-OFL.txt']) {
     const license = await read(`../public/fonts/licenses/${file}`);
