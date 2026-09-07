@@ -28,6 +28,7 @@ export default function AudiencePathCard({
   return (
     <Link
       href={href}
+      aria-label={cta ? `${title} — ${cta}` : title}
       onClick={() => trackMeta('PathSelected', { path_type: pathType }, { custom: true })}
       className={`group block h-full tap-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] ${detailed ? 'rounded-[22px] md:rounded-[26px]' : 'rounded-[20px] sm:rounded-[22px]'}`}
     >
@@ -74,6 +75,7 @@ export default function AudiencePathCard({
         <article
           className="path-card interactive-card relative flex h-full min-h-[104px] items-center gap-3 rounded-[20px] border p-3.5 shadow-soft sm:min-h-0 sm:flex-col sm:items-stretch sm:gap-0 sm:rounded-[22px] sm:p-5"
           data-tone={tone}
+          data-primary={primary ? 'true' : undefined}
         >
           <span
             className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl sm:h-[52px] sm:w-[52px] sm:rounded-[18px]"

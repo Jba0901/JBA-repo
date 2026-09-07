@@ -31,6 +31,7 @@ export default function StartHerePage() {
               cta={t('startProjectCta')}
               tone="teal"
               pathType="project"
+              primary
             />
             <AudiencePathCard
               href="/contractor"
